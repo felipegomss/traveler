@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import html2pdf from "html2pdf.js";
 import { Button } from "@/components/ui/button";
 import { FreeTravelItinerary } from "@/types/itinerary";
+import { DownloadIcon } from "@radix-ui/react-icons";
 
 const fetchItinerary = async (
   destination: string,
@@ -70,7 +71,7 @@ export default function Page() {
   const path = usePathname();
   const params = useSearchParams();
   const destination = decodeURIComponent(path || "")
-    .replace(/,/g, ", ")
+    .replace(/,/g, ",")
     .slice(1);
   const days = parseInt(params.get("days") || "7");
   const language = params.get("lang") || "English";
@@ -82,7 +83,7 @@ export default function Page() {
   const handlePdf = () => {
     const opt = {
       margin: 1,
-      filename: `${destination}itinerary.pdf`,
+      filename: `Traveler - ${destination.toLocaleUpperCase()} Itinerary.pdf`,
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
@@ -103,8 +104,11 @@ export default function Page() {
 
   return (
     <div className="relative">
-      <div className="absolute right-5 bottom-5">
-        <Button onClick={handlePdf}>Download as PDF</Button>
+      <div className="fixed right-10 bottom-10">
+        <Button onClick={handlePdf}>
+          <DownloadIcon className="mr-2 h-4 w-4" />
+          Download as PDF
+        </Button>
       </div>
       <div className="container mx-auto px-4 py-8 " ref={itineraryRef}>
         <div className="mb-10">

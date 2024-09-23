@@ -47,7 +47,7 @@ export default function Home() {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         suggestionRef.current &&
-        !suggestionRef.current.contains(event.target as Node) // garantindo que 'target' seja um Node
+        !suggestionRef.current.contains(event.target as Node)
       ) {
         setOpenSelect(false);
       }
